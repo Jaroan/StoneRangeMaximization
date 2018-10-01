@@ -17,15 +17,32 @@ double load,loadMax; //referred to as n in the paper
 double CDrag,CLift;
 
 double DragInduced,LiftInduced,intialLift;
+double zeroLiftDrag,liftInducedDrag;
 double angleOfAttack;
 
+
 void initialize();
+void obtainIncrements();
 
 int main()
 {
     fastio;
     initialize();
-    cout<<density<<" "<<loadMax<<endl;
+    // cout<<density<<" "<<loadMax<<endl;
+    
+    load=loadMax;
+
+    while(height>=0)
+    {
+        obtainIncrements();
+        
+        range+=drange;
+        height+=dheight;
+        velocity+=dvelocity;
+        pathangle+=dpathangle;
+
+        cout<<"Range:"<<range<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Path Angle:"<<pathangle<<endl;
+    }
 }
 
 void initialize()
@@ -37,4 +54,17 @@ void initialize()
     pathangle=-0.1; //radians
     density=1.225*exp(-beta*height);
     loadMax=density*velocity*velocity*surfaceArea*sqrt(zeroLiftDragCoeff/liftInducedDragCoeff)/(2*mass*g);
+}
+
+void obtainIncrements()
+{
+    drange=velocity*cos(pathangle);
+    dheight=velocity*sin(pathangle);
+    dpathangle=g*(load-cos(pathangle))/velocity;
+
+    density=1.225*exp(-beta*height);
+    zeroLiftDrag=density*velocity*velocity*surfaceArea*zeroLiftDragCoeff/2;
+    liftInducedDrag=2*(mass*g)*(mass*g)*liftInducedDragCoeff/(density*velocity*velocity*surfaceArea);
+
+    dvelocity=-(zeroLiftDrag+liftInducedDrag*load*load)/mass - g*sin(pathangle);
 }
