@@ -28,7 +28,7 @@ int main()
 {
     fastio;
     initialize();
-    // cout<<density<<" "<<loadMax<<endl;
+    cout<<density<<" "<<loadMax<<endl;
     
     load=loadMax;
 
@@ -40,9 +40,28 @@ int main()
         height+=dheight;
         velocity+=dvelocity;
         pathangle+=dpathangle;
-
-        cout<<"Range:"<<range<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Path Angle:"<<pathangle<<endl;
+        
+        cout<<"Range:"<<range<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Path Angle:"<<pathangle<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Density:"<<density<<endl;
     }
+
+    cout<<endl<<endl<<endl<<"Computations for various values of load"<<endl<<endl;
+    for(load=-1;load<=2;load+=0.01)
+    {
+        initialize();
+        while(height>=0)
+        {
+            obtainIncrements();
+            
+            range+=drange;
+            height+=dheight;
+            velocity+=dvelocity;
+            pathangle+=dpathangle;
+        }
+
+        cout<<"load:"<<load<<"   range:"<<range<<endl;
+    }
+
+    
 }
 
 void initialize()
@@ -67,4 +86,9 @@ void obtainIncrements()
     liftInducedDrag=2*(mass*g)*(mass*g)*liftInducedDragCoeff/(density*velocity*velocity*surfaceArea);
 
     dvelocity=-(zeroLiftDrag+liftInducedDrag*load*load)/mass - g*sin(pathangle);
+
+    if(dheight>0)
+        dheight*=-1;
+    if(drange<0)
+        drange*=-1;
 }
