@@ -17,6 +17,7 @@ const double beta=0.000138888888888;
 //The main parameters that change and the components that store this increase
 double range,height,velocity, pathangle,density;
 double drange,dheight,dvelocity, dpathangle;
+double flighttime=0;
 
 
 //The load component and the max load component which shall be calculated from the equation given be below
@@ -45,6 +46,7 @@ int main()
 
     while(height>=0)
     {
+        flighttime++;
         obtainIncrements();
         
         //updating the increments for each iteration
@@ -52,27 +54,8 @@ int main()
         height+=dheight;
         velocity+=dvelocity;
         pathangle+=dpathangle;
-        
-        cout<<"Range:"<<range<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Path Angle:"<<pathangle<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Density:"<<density<<endl;
-    }
 
-    cout<<endl<<endl<<endl<<"Computations for various values of load"<<endl<<endl;
-
-    //Doing the same as above for multiple values of load to check the validity
-    for(load=-1;load<=2;load+=0.01)
-    {
-        initialize();
-        while(height>=0)
-        {
-            obtainIncrements();
-            
-            range+=drange;
-            height+=dheight;
-            velocity+=dvelocity;
-            pathangle+=dpathangle;
-        }
-
-        cout<<"load:"<<load<<"   range:"<<range<<endl;
+        cout<<"Time:"<<flighttime<<"||"<<"Range:"<<range<<"||"<<"Path Angle:"<<pathangle<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Density:"<<density<<"||load:"<<load<<endl;
     }
 }
 
@@ -104,8 +87,10 @@ void obtainIncrements()
 
     dvelocity=-(zeroLiftDrag+liftInducedDrag*load*load)/mass - g*sin(pathangle);
 
-    if(dheight>0)
-        dheight*=-1;
-    if(drange<0)
-        drange*=-1;
+    load=density*velocity*velocity*surfaceArea*sqrt(zeroLiftDragCoeff/liftInducedDragCoeff)/(2*mass*g);
+
+    // if(dheight>0)
+    //     dheight*=-1;
+    // if(drange<0)
+    //     drange*=-1;
 }
