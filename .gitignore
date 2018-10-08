@@ -1,6 +1,4 @@
 #Executables
-./a.out
-a.out
 
 #Result files
 output.txt
@@ -9,3 +7,6 @@ test.txt
 
 #input files
 input.txt
+
+#Python plotting program
+test.py
