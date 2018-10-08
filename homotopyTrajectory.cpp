@@ -44,6 +44,7 @@ int main()
     //Checking for LoadMax quantity
     load=loadMax;
 
+    cout<<"[";
     while(height>=0)
     {
         flighttime++;
@@ -55,8 +56,10 @@ int main()
         velocity+=dvelocity;
         pathangle+=dpathangle;
 
-        cout<<"Time:"<<flighttime<<"||"<<"Range:"<<range<<"||"<<"Path Angle:"<<pathangle<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Density:"<<density<<"||load:"<<load<<endl;
+        // cout<<"Time:"<<flighttime<<"||"<<"Range:"<<range<<"||"<<"Path Angle:"<<pathangle<<"||"<<"Height:"<<height<<"||"<<"Velocity:"<<velocity<<"||"<<"Density:"<<density<<"||load:"<<load<<endl;
+        cout<<load<<",";
     }
+    cout<<"]";
 }
 
 
